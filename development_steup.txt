@@ -1,0 +1,43 @@
+# Clone the repository
+git clone https://github.com/your-username/rag-flask-app.git
+cd rag-flask-app
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # Linux/macOS
+# or
+venv\Scripts\activate  # Windows
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure environment
+cp .env.example .env
+# Edit .env with your configuration
+
+# Start Ollama and download models
+ollama serve  # In separate terminal
+ollama pull qwen2.5:3b-instruct
+ollama pull all-MiniLM-L6-v2
+
+# Run the application
+python app.py
+
+===============================================================
+Docker Deployment:
+# Build Docker image
+docker build -t rag-app .
+
+# Run Docker container
+docker run -p 5000:5000 rag-app
+
+# Or with volume mounts for persistence
+docker run -p 5000:5000 -v ./data:/app/data -v ./chroma_db:/app/chroma_db rag-app
+
+Production Deployment:
+# Using Gunicorn
+pip install gunicorn
+gunicorn -w 4 -b 0.0.0.0:5000 app:app
+
+# Or using Docker with production configuration
+docker run -d -p 80:5000 --name rag-app rag-app

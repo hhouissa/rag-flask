@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h3>Upload Documents</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <!-- CSRF token added here -->
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Select PDF Files</label>
+                        <input class="form-control" type="file" id="file" name="file" accept=".pdf" multiple required>
+                        <div class="form-text">You can select multiple PDF files.</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                    <a href="/" class="btn btn-secondary">Back to Home</a>
+                </form>
+
+                {% if message %}
+                <div class="alert alert-{{ 'success' if 'successfully' in message else 'danger' }} mt-3">
+                    {{ message }}
+                </div>
+                {% endif %}
+
+                {% if uploaded_files %}
+                <div class="mt-4">
+                    <h4>Uploaded Files:</h4>
+                    <ul class="list-group">
+                        {% for file in uploaded_files %}
+                        <li class="list-group-item">{{ file }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

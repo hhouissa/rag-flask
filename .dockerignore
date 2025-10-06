@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.pytest_cache/
+.coverage
+.git/
+.mypy_cache/
+.vscode/
+.idea/
+*.log
+chroma_db/
+data/
+instance/
+.DS_Store

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h3>User Profile</h3>
+            </div>
+            <div class="card-body">
+                <h5>Welcome, {{ user.username }}!</h5>
+                <p>Email: {{ user.email }}</p>
+                <p>Role: {{ user.role }}</p>
+                <p>Member since: {{ user.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                
+                <hr>
+                <h5>API Key Management</h5>
+                <p>Current API Key: {{ user.api_key[:8] }}...</p>
+                <form method="POST" action="/api/users/me/apikey">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <button type="submit" class="btn btn-warning btn-sm">Regenerate API Key</button>
+                </form>
+                
+                <hr>
+                <a href="/" class="btn btn-primary">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

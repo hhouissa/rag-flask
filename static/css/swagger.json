@@ -1,0 +1,123 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "RAG Document Q&A API",
+    "description": "API for the RAG Document Question & Answer system",
+    "version": "1.0.0"
+  },
+  "host": "localhost:5000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/api/ask": {
+      "post": {
+        "summary": "Ask a question about documents",
+        "description": "Submit a question to get an answer based on the indexed documents",
+        "parameters": [
+          {
+            "name": "question",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "question": {
+                  "type": "string",
+                  "example": "What is the main topic of the document?"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "question": {
+                  "type": "string"
+                },
+                "answer": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/documents": {
+      "get": {
+        "summary": "List documents",
+        "description": "Get a list of all indexed documents",
+        "responses": {
+          "200": {
+            "description": "List of documents",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "documents": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/rebuild": {
+      "post": {
+        "summary": "Rebuild vector store",
+        "description": "Rebuild the vector store with current documents",
+        "responses": {
+          "200": {
+            "description": "Rebuild successful"
+          }
+        }
+      }
+    },
+    "/api/upload": {
+      "post": {
+        "summary": "Upload document",
+        "description": "Upload a new PDF document",
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "type": "file",
+            "required": true,
+            "description": "PDF file to upload"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Upload successful"
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "description": "Check if the service is running",
+        "responses": {
+          "200": {
+            "description": "Service is healthy"
+          }
+        }
+      }
+    }
+  }
+}

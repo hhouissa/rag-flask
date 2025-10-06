@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h3>Query Results</h3>
+            </div>
+            <div class="card-body">
+                <a href="/ask" class="btn btn-primary mb-3">Ask Another Question</a>
+                <a href="/" class="btn btn-secondary mb-3">Back to Home</a>
+
+                {% for result in results %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <strong>Question:</strong> {{ result.question }}
+                    </div>
+                    <div class="card-body">
+                        {% if result.error %}
+                            <div class="alert alert-danger">
+                                Error: {{ result.error }}
+                            </div>
+                        {% else %}
+                            <p><strong>Answer:</strong></p>
+                            <p class="bg-light p-3 rounded">{{ result.answer|safe }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h3>Ask a Question</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <div class="mb-3">
+                        <label for="question" class="form-label">Your Question</label>
+                        <textarea 
+                            class="form-control" 
+                            id="question" 
+                            name="question" 
+                            rows="3" 
+                            placeholder="Ask a question about your documents..."
+                            required
+                        ></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Get Answer</button>
+                    <a href="/" class="btn btn-secondary">Back to Home</a>
+                </form>
+
+                {% if question and answer %}
+                <hr>
+                <div class="mt-4">
+                    <h4>Question:</h4>
+                    <p class="bg-light p-3 rounded">{{ question }}</p>
+                    
+                    <h4>Answer:</h4>
+                    <div class="bg-success bg-opacity-10 p-3 rounded">
+                        <p>{{ answer|safe }}</p>
+                    </div>
+                    
+                    {% if sources %}
+                    <div class="mt-3">
+                        <h5>Sources:</h5>
+                        <ul>
+                            {% for source in sources %}
+                            <li class="source-info">{{ source }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
